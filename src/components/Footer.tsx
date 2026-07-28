@@ -1,15 +1,56 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useRef, useState, useEffect } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import CustomeText from "./ui/CustomeText";
-// import Link from "next/link";
-// import ClientOnly from "./ui/ClientOnly";
 import emailjs from "@emailjs/browser";
+
+type StatusType = "idle" | "success" | "error";
+
+type EmailJSError = {
+  status?: number;
+  text?: string;
+  message?: string;
+  stack?: string;
+  name?: string;
+};
+
+function extractEmailJSError(error: unknown): EmailJSError {
+  if (typeof error === "string") {
+    return { message: error };
+  }
+
+  if (error instanceof Error) {
+    return {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    };
+  }
+
+  if (typeof error === "object" && error !== null) {
+    const maybe = error as Record<string, unknown>;
+    return {
+      status: typeof maybe.status === "number" ? maybe.status : undefined,
+      text: typeof maybe.text === "string" ? maybe.text : undefined,
+      message: typeof maybe.message === "string" ? maybe.message : undefined,
+      stack: typeof maybe.stack === "string" ? maybe.stack : undefined,
+      name: typeof maybe.name === "string" ? maybe.name : undefined,
+    };
+  }
+
+  return {};
+}
+
+const EMAILJS_CONFIG = {
+  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "service_ugilufa",
+  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "template_lezac9x",
+  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "bIqxrsbZSTRgcErxl",
+};
 
 const Footer = () => {
   const [isSending, setIsSending] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
-  const formRef = useRef<HTMLFormElement>(null);
+  const [statusType, setStatusType] = useState<StatusType>("idle");
   const [formData, setFormData] = useState({
     from_name: "",
     from_email: "",
@@ -17,12 +58,15 @@ const Footer = () => {
     message: "",
   });
 
-  // Initialize EmailJS
+  // Initialize EmailJS only when a public key is available.
   useEffect(() => {
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-    if (publicKey) {
-      emailjs.init(publicKey);
+    if (EMAILJS_CONFIG.publicKey) {
+      emailjs.init(EMAILJS_CONFIG.publicKey);
+      console.info("[EmailJS] Public key detected and initialized.");
+      return;
     }
+
+    console.warn("[EmailJS] NEXT_PUBLIC_EMAILJS_PUBLIC_KEY is not set. Submission will still be attempted using existing EmailJS configuration.");
   }, []);
 
   const handleChange = (
@@ -33,54 +77,86 @@ const Footer = () => {
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  setIsSending(true);
-  setStatusMessage("");
-
-  try {
-    const response = await emailjs.send(
-      "service_ugilufa",
-      "template_lezac9x",
-      {
-        from_name: formData.from_name,
-        from_email: formData.from_email,
-        subject: formData.subject || "No Subject",
-        message: formData.message,
-        to_email: "khumalosiya2001@gmail.com",
-      }
-    );
-
-    console.log("EmailJS Success:", response);
-
-    setStatusMessage("Your message has been sent successfully!");
-    setFormData({
-      from_name: "",
-      from_email: "",
-      subject: "",
-      message: "",
-    });
-  } catch (error: unknown) {
-    console.error("EmailJS Error:", error);
-
-    if (typeof error === "object" && error !== null) {
-      const emailError = error as {
-        text?: string;
-        status?: number;
-        message?: string;
-      };
-
-      console.error("Error Message:", emailError.message);
-      console.error("Error Text:", emailError.text);
-      console.error("Error Status:", emailError.status);
+    event.preventDefault();
+    if (isSending) {
+      return;
     }
 
-    setStatusMessage(
-      "Something went wrong while sending your message. Please try again later."
-    );
-  } finally {
-    setIsSending(false);
-  }
-};
+    setStatusMessage("");
+    setStatusType("idle");
+
+    const payload = {
+      from_name: formData.from_name.trim(),
+      from_email: formData.from_email.trim(),
+      subject: formData.subject.trim() || "No Subject",
+      message: formData.message.trim(),
+      to_email: "khumalosiya2001@gmail.com",
+    };
+
+    if (!payload.from_name || !payload.from_email || !payload.message) {
+      setStatusType("error");
+      setStatusMessage("Unable to send message. Please fill in all required fields.");
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(payload.from_email)) {
+      setStatusType("error");
+      setStatusMessage("Unable to send message. Please enter a valid email address.");
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      console.info("[EmailJS] Sending request...", {
+        serviceId: EMAILJS_CONFIG.serviceId,
+        templateId: EMAILJS_CONFIG.templateId,
+      });
+
+      const response = await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateId,
+        payload,
+        { publicKey: EMAILJS_CONFIG.publicKey }
+      );
+
+      console.info("[EmailJS] Success response:", {
+        status: response.status,
+        text: response.text,
+      });
+
+      setStatusType("success");
+      setStatusMessage("Message sent successfully.");
+      setFormData({
+        from_name: "",
+        from_email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error: unknown) {
+      const emailError = extractEmailJSError(error);
+
+      console.warn("[EmailJS] Request failed", {
+        error,
+        name: emailError.name,
+        status: emailError.status,
+        text: emailError.text,
+        message: emailError.message,
+        stack: emailError.stack,
+      });
+
+      setStatusType("error");
+      const reason = emailError.text || emailError.message;
+      setStatusMessage(
+        reason
+          ? `Unable to send message. ${reason}`
+          : "Unable to send message. Please try again."
+      );
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   return (
     <footer id="contact" className="section-shell relative w-full min-h-screen bg-[#0f1115] flex flex-col items-center justify-center py-16 px-4 sm:px-6 lg:px-[71px] gap-10 overflow-hidden">
@@ -95,7 +171,7 @@ const Footer = () => {
 
       <div className="w-full max-w-6xl grid gap-8 lg:grid-cols-[1.1fr_0.9fr] relative z-10">
         <div className="gpu-layer rounded-[32px] border border-white/30 bg-white/10 backdrop-blur-2xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.3)]">
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <input
                 type="text"
@@ -146,7 +222,7 @@ const Footer = () => {
               </button>
 
               {statusMessage ? (
-                <p className={`text-sm ${statusMessage.includes("success") ? "text-emerald-300" : "text-rose-300"}`}>
+                <p className={`text-sm ${statusType === "success" ? "text-emerald-300" : "text-rose-300"}`}>
                   {statusMessage}
                 </p>
               ) : null}
