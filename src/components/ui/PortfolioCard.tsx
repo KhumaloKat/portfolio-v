@@ -12,6 +12,7 @@ const PortfolioCardComponent: React.FC<PortfolioCardProps> = ({ priority = false
   return (
     <Link
       href={project.href}
+      data-cursor-hover="true"
         className="gpu-layer relative group text-left 
         w-full 
         md:w-[633px] h-[250px] md:h-[371px] 

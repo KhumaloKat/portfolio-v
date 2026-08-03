@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const TOUCH_QUERY = "(hover: none), (pointer: coarse)";
+const TOUCH_QUERY = "(hover: none) and (pointer: coarse)";
 
 export default function useIsTouchDevice() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);

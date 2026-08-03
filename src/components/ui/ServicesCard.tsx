@@ -9,7 +9,7 @@ interface HoverCardProps {
 
 function ServicesCardComponent({ title, imageSrc, priority = false }: HoverCardProps) {
   return (
-    <div className="gpu-layer relative flex flex-col items-center justify-end w-full md:max-w-[360px] lg:max-w-[416px] h-[450px] lg:h-[508px] rounded-[37px] lg:rounded-[40px] bg-white/10 backdrop-blur-[15px] border border-white/50 hover:bg-[#7b7d7a] transition-[opacity,filter,transform] duration-300 ease-in-out overflow-hidden cursor-pointer group">
+    <div data-cursor-hover="true" className="gpu-layer relative flex flex-col items-center justify-end w-full md:max-w-[360px] lg:max-w-[416px] h-[450px] lg:h-[508px] rounded-[37px] lg:rounded-[40px] bg-white/10 backdrop-blur-[15px] border border-white/50 hover:bg-[#7b7d7a] transition-[opacity,filter,transform] duration-300 ease-in-out overflow-hidden cursor-pointer group">
       
       {/* Title (absolute top) */}
       <h1 className="absolute top-4 w-full h-[40px] sm:h-[45px] md:h-[50px] lg:h-[65px] flex items-start font-medium text-[20px] md:text-[24px] lg:text-[32px] text-white z-30 border-b-2 border-[#F9FAFB]/30">

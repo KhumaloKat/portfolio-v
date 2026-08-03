@@ -39,7 +39,6 @@ const Navbar = () => {
                         <text x="4" y="18" fontSize="12" fontWeight="bold" fill="white">SK</text>
                     </svg>
                 </div>
-                <span className="font-bold text-sm sm:text-base lg:text-lg tracking-wide">SK</span>
             </div>
 
             {/* Right Menu (Desktop) */}
