@@ -66,32 +66,13 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
 
               <div className="relative overflow-hidden rounded-[28px] border border-white/12 bg-black/28">
                 {project.heroVideo ? (
-                  <video
+                  <iframe
                     src={project.heroVideo}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    controls
-                    className="h-[300px] w-full object-cover sm:h-[380px] lg:h-[520px]"
+                    title={`${project.title} video`}
+                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                    className="h-[300px] w-full border-0 sm:h-[380px] lg:h-[520px]"
                   />
-                ) : (
-                  <div className="relative h-[300px] sm:h-[380px] lg:h-[520px]">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      priority
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 65vw"
-                    />
-                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle,rgba(255,255,255,0.12),transparent_42%)]">
-                      <div className="rounded-full border border-white/22 bg-white/12 p-4 backdrop-blur-xl">
-                        <PlayCircle size={42} className="text-white/90" />
-                      </div>
-                    </div>
-                  </div>
-                )}
+                ) : null}
               </div>
             </div>
           </motion.div>
