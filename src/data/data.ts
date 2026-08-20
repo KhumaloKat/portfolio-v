@@ -257,14 +257,14 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     slug: "pixhawk-drone-design",
-    image: "/ardupilot.png",
+    image: "/A2.png",
     title: "Pixhawk Drone Design",
     href: "/projects/pixhawk-drone-design",
     desc: "Assembled, configured, and programmed a Pixhawk 2.4.8 F405 drone with a Jetson Nano payload for computer vision workloads.",
     overview: "A complete drone build and integration project where the airframe, Pixhawk flight controller, firmware, and Jetson Nano payload were assembled into a single autonomous vision-enabled platform.",
     technologies: ["Pixhawk 2.4.8 F405", "Jetson Nano", "ArduPilot", "Firmware Setup", "Computer Vision", "Drone Assembly"],
     keyFeatures: ["Custom drone assembly", "Flight controller installation", "Firmware programming and calibration", "Jetson Nano payload integration", "Computer vision onboard processing"],
-    gallery: ["/ardupilot.png", "/A1.png", "/A3.png", "/A5.png"],
+    gallery: ["/A2.png", "/A1.png", "/A3.png", "/A5.png"],
     heroVideo: "/videos/Ardupilot.mp4",
     githubUrl: "https://github.com/KhumaloKat/portfolio-v5",
     architecture: [
