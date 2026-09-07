@@ -143,7 +143,11 @@ export default function PremiumCursor() {
     <>
       <motion.div
         aria-hidden="true"
+<<<<<<< HEAD
+        className="pointer-events-none fixed top-0 left-0 z-[2147483647] rounded-full border border-white/70 bg-[#2b3138]/55 backdrop-blur-lg"
+=======
         className="pointer-events-none fixed top-0 left-0 z-[9998] rounded-full border border-white/70 bg-[#2b3138]/55 backdrop-blur-lg"
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
         style={{
           x: innerX,
           y: innerY,
@@ -160,7 +164,11 @@ export default function PremiumCursor() {
 
       <motion.div
         aria-hidden="true"
+<<<<<<< HEAD
+        className="pointer-events-none fixed top-0 left-0 z-[2147483646] rounded-full border border-[#353d45]/80 bg-[#161c23]/32"
+=======
         className="pointer-events-none fixed top-0 left-0 z-[9997] rounded-full border border-[#353d45]/80 bg-[#161c23]/32"
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
         style={{
           x: outerX,
           y: outerY,

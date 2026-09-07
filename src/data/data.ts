@@ -160,7 +160,11 @@ export const portfolioData: PortfolioItem[] = [
     technologies: ["Python", "OpenCV", "YOLO", "Pixhawk", "Telemetry", "Computer Vision"],
     keyFeatures: ["Real-time detection overlays", "Visual target interpretation", "Flight-support telemetry hooks", "Dataset iteration workflow"],
     gallery: ["/c1.png", "/c2.png", "/c3.png", "/c4.png", "/c5.png", "/c6.png", "/c7.png", "/c8.png", "/c9.png"],
+<<<<<<< HEAD
+    heroVideo: "https://res.cloudinary.com/ye9luiag/video/upload/v1788772834/Advanced_drone_control.mp4",
+=======
     heroVideo: "/videos/Advanced drone control.mp4",
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
     githubUrl: "https://github.com/KhumaloKat/portfolio-v5",
     architecture: [
       { title: "Vision Layer", details: ["Frame ingestion", "Detection inference", "Tracking and confidence scoring"] },
@@ -186,7 +190,11 @@ export const portfolioData: PortfolioItem[] = [
     technologies: ["Next.js", "TypeScript", "Pixhawk", "GIS", "Photogrammetry", "Tailwind CSS"],
     keyFeatures: ["Mission-planning workflow", "Survey image QA", "Geospatial asset review", "Inspection report export"],
     gallery: ["/operation.png", "/op1.png", "/op2.png", "/op3.png", "/op4.png", "/op5.png"],
+<<<<<<< HEAD
+    heroVideo: "https://res.cloudinary.com/ye9luiag/video/upload/v1788772842/Surveying_and_mapping.mp4",
+=======
     heroVideo: "/videos/Surveying and mapping.mp4",
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
     githubUrl: "https://github.com/KhumaloKat/portfolio-v5",
     architecture: [
       { title: "Capture Layer", details: ["Pre-flight mission planning", "Consistent aerial overlap", "Field validation before upload"] },
@@ -212,7 +220,11 @@ export const portfolioData: PortfolioItem[] = [
     overview: "Applied machine learning to a medical-facing workflow, translating predictive outputs into a usable product surface for non-technical stakeholders.",
     technologies: ["Python", "Scikit-learn", "Next.js", "TypeScript", "Data Visualization", "REST APIs"],
     keyFeatures: ["Prediction workflow", "Outcome explanation surface", "Clinical-friendly dashboard", "Model result summaries"],
+<<<<<<< HEAD
+    gallery: ["/Ardupilot.png"],
+=======
     gallery: ["/medi.png", "/p4.jpg", "/p5.jpg"],
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
     githubUrl: "https://github.com/KhumaloKat/portfolio-v5",
     architecture: [
       { title: "Model Layer", details: ["Training and evaluation", "Feature selection", "Prediction serving contract"] },
@@ -238,7 +250,11 @@ export const portfolioData: PortfolioItem[] = [
     technologies: ["Mission Planning", "Pixhawk", "Trajectory Design", "System Integration", "Simulation", "Safety Checks", "Blender"],
     keyFeatures: ["Formation planning", "Sequence timing", "Pre-flight validation", "Show safety workflow", "Blender workflow with SketchUp"],
     gallery: ["/555.PNG", "/D2.png", "/D3.png", "/D4.png", "/D1.png", "/D5.png"],
+<<<<<<< HEAD
+    heroVideo: "https://res.cloudinary.com/ye9luiag/video/upload/v1788772882/Drone_Light_v2.mp4",
+=======
     heroVideo: "/videos/Drone Light v2.mp4",
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
     githubUrl: "https://github.com/KhumaloKat/portfolio-v5",
     architecture: [
       { title: "Planning Layer", details: ["Formation definition", "Waypoint choreography", "Safety envelope design"] },
@@ -257,15 +273,24 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     slug: "pixhawk-drone-design",
+<<<<<<< HEAD
     image: "/ardupilot.png",
+=======
+    image: "/A2.png",
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
     title: "Pixhawk Drone Design",
     href: "/projects/pixhawk-drone-design",
     desc: "Assembled, configured, and programmed a Pixhawk 2.4.8 F405 drone with a Jetson Nano payload for computer vision workloads.",
     overview: "A complete drone build and integration project where the airframe, Pixhawk flight controller, firmware, and Jetson Nano payload were assembled into a single autonomous vision-enabled platform.",
     technologies: ["Pixhawk 2.4.8 F405", "Jetson Nano", "ArduPilot", "Firmware Setup", "Computer Vision", "Drone Assembly"],
     keyFeatures: ["Custom drone assembly", "Flight controller installation", "Firmware programming and calibration", "Jetson Nano payload integration", "Computer vision onboard processing"],
+<<<<<<< HEAD
     gallery: ["/ardupilot.png", "/A1.png", "/A3.png", "/A5.png"],
+    heroVideo: "https://res.cloudinary.com/ye9luiag/video/upload/v1788772836/Ardupilot.mp4",
+=======
+    gallery: ["/A2.png", "/A1.png", "/A3.png", "/A5.png"],
     heroVideo: "/videos/Ardupilot.mp4",
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
     githubUrl: "https://github.com/KhumaloKat/portfolio-v5",
     architecture: [
       { title: "Airframe Layer", details: ["Hardware selection", "Frame assembly", "Mechanical balancing and mounting"] },

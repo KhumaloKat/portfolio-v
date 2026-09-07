@@ -188,6 +188,16 @@ body {
   cursor: none !important;
 }
 
+<<<<<<< HEAD
+.case-study-panel {
+  isolation: isolate;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  contain: paint;
+}
+
+=======
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
 .marquee {
     animation: scroll-left 10s linear infinite;
     will-change: transform;

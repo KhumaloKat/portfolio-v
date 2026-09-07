@@ -64,6 +64,18 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
                 </p>
               </div>
 
+<<<<<<< HEAD
+              <div className="relative aspect-video overflow-hidden rounded-[28px] border border-white/12 bg-black/28">
+                {project.heroVideo ? (
+                  <video
+                    src={project.heroVideo}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                    className="absolute inset-0 h-full w-full object-cover"
+=======
               <div className="relative overflow-hidden rounded-[28px] border border-white/12 bg-black/28">
                 {project.heroVideo ? (
                   <iframe
@@ -71,6 +83,7 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
                     title={`${project.title} video`}
                     allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                     className="h-[300px] w-full border-0 sm:h-[380px] lg:h-[520px]"
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
                   />
                 ) : null}
               </div>
@@ -78,12 +91,18 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
           </motion.div>
 
           <motion.aside
+<<<<<<< HEAD
+            className="flex flex-col gap-5"
+          >
+            <div className="case-study-panel rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+=======
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col gap-5"
           >
             <div className="rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
               <p className="text-xs uppercase tracking-[0.2em] text-white/58">Technologies</p>
               <div className="mt-4 flex flex-wrap gap-2.5">
                 {project.technologies.map((tech, index) => (
@@ -100,7 +119,11 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
               </div>
             </div>
 
+<<<<<<< HEAD
+            <div className="case-study-panel rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+=======
             <div className="rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
               <p className="text-xs uppercase tracking-[0.2em] text-white/58">Key Features</p>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-white/82 sm:text-base">
                 {project.keyFeatures.map((feature) => (
@@ -112,7 +135,11 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
               </ul>
             </div>
 
+<<<<<<< HEAD
+            <div className="case-study-panel rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+=======
             <div className="rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+>>>>>>> e6db71ba244a135a5cff9e7f77aa2397043fe436
               <p className="text-xs uppercase tracking-[0.2em] text-white/58">Workflow</p>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-white/82 sm:text-base">
                 {project.implementation.map((step) => (
