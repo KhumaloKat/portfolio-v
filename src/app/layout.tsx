@@ -32,12 +32,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        <PremiumCursor />
         <div className="overflow-x-hidden">
           {children}
           <Analytics debug={true} />
           <Footer/>
         </div>
+        <PremiumCursor />
       </body>
     </html>
   );
