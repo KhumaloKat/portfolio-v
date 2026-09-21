@@ -16,4 +16,6 @@ declare module "lucide-react" {
 	export const Github: LucideIcon;
 	export const PlayCircle: LucideIcon;
 	export const ArrowLeft: LucideIcon;
+	export const ChevronLeft: LucideIcon;
+	export const ChevronRight: LucideIcon;
 }
