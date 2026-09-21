@@ -18,50 +18,7 @@ import {
   type KeyboardEvent,
   type UIEvent,
 } from "react";
-
-type EducationMilestone = {
-  year: string;
-  title: string;
-  institution: string;
-  logo: string;
-  status: string;
-  skills: string[];
-};
-
-const MILESTONES: EducationMilestone[] = [
-  {
-    year: "2019",
-    title: "National Senior Certificate",
-    institution: "Ziphakamiseni Secondary School",
-    logo: "/ziphakamiseni logo.png",
-    status: "Completed",
-    skills: ["Mathematics", "Physical Sciences", "Communication", "Analytical Thinking"],
-  },
-  {
-    year: "2024",
-    title: "Diploma in Computer Systems Engineering",
-    institution: "Tshwane University of Technology",
-    logo: "/TUT Logo.png",
-    status: "Completed",
-    skills: ["Software Engineering", "Networking", "Embedded Systems", "Systems Design"],
-  },
-  {
-    year: "2025",
-    title: "Remote Pilot Certificate (BVLOS)",
-    institution: "NTSU Drone Academy",
-    logo: "/Ntsu logo.png",
-    status: "Completed",
-    skills: ["Mission Planning", "Photogrammetry", "DJI Systems", "Pixhawk", "GIS", "BVLOS Operations"],
-  },
-  {
-    year: "2026",
-    title: "Advanced Diploma in Computer Systems Engineering",
-    institution: "Tshwane University of Technology",
-    logo: "/TUT Logo.png",
-    status: "Completed",
-    skills: ["Machine Learning", "Computer Vision", "Software Engineering", "Research", "AI"],
-  },
-];
+import { educationMilestones } from "@/data/data";
 
 const PARTICLE_LAYOUT = [
   { left: "6%", top: "12%", delay: 0.2, duration: 6.4, scale: 1 },
@@ -81,7 +38,7 @@ const CARD_TRANSITION = {
 };
 
 function clampIndex(index: number) {
-  return Math.max(0, Math.min(index, MILESTONES.length - 1));
+  return Math.max(0, Math.min(index, educationMilestones.length - 1));
 }
 
 function EducationTimelineComponent() {
@@ -121,7 +78,7 @@ function EducationTimelineComponent() {
   useEffect(() => {
     const unsubscribe = smoothedProgress.on("change", (value) => {
       const normalized = Math.max(0, Math.min(value, 0.999));
-      const nextIndex = clampIndex(Math.floor(normalized * MILESTONES.length));
+      const nextIndex = clampIndex(Math.floor(normalized * educationMilestones.length));
       setActiveIndex((prev) => (prev === nextIndex ? prev : nextIndex));
     });
 
@@ -144,13 +101,13 @@ function EducationTimelineComponent() {
     track.scrollTo({ left, behavior: "smooth" });
   }, [activeIndex, isMobile]);
 
-  const activeMilestone = MILESTONES[activeIndex];
+  const activeMilestone = educationMilestones[activeIndex];
 
   const desktopFillScale = useMemo(() => {
     if (!timelineInView) {
       return 0;
     }
-    return Math.max(activeIndex / (MILESTONES.length - 1), 0.05);
+    return Math.max(activeIndex / (educationMilestones.length - 1), 0.05);
   }, [activeIndex, timelineInView]);
 
   const handleKeyNavigation = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -175,7 +132,7 @@ function EducationTimelineComponent() {
   return (
     <div
       ref={sectionRef}
-      className="relative isolate w-full min-h-[100vh] overflow-hidden rounded-[32px] lg:rounded-[50px] bg-[linear-gradient(180deg,#f9fbfd_0%,#eff3f8_100%)] px-4 sm:px-6 lg:px-10 xl:px-16 py-10 md:py-14 lg:py-16"
+      className="relative isolate z-0 w-full min-h-[100vh] overflow-hidden rounded-[32px] lg:rounded-[50px] bg-[linear-gradient(180deg,#f9fbfd_0%,#eff3f8_100%)] px-4 sm:px-6 lg:px-10 xl:px-16 py-10 md:py-14 lg:py-16"
       onKeyDown={handleKeyNavigation}
       tabIndex={0}
       role="region"
@@ -213,8 +170,11 @@ function EducationTimelineComponent() {
         <header className="flex flex-col items-center gap-3 text-center pt-2">
           <p className="text-[#667085] uppercase tracking-[0.22em] text-xs sm:text-sm">Education</p>
           <h2 className="text-[#111927] text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
-            My Academic Journey
+            Computer Systems Engineering
           </h2>
+          <p className="max-w-xl text-[#475467] text-sm sm:text-base">
+            Diploma and Advanced Diploma from Tshwane University of Technology, with additional applied certification.
+          </p>
         </header>
 
         <div className="w-full max-w-[1080px] flex flex-col items-center gap-7 md:gap-10">
@@ -233,7 +193,7 @@ function EducationTimelineComponent() {
               />
 
               <div className="relative flex justify-between items-start">
-                {MILESTONES.map((milestone, index) => {
+                {educationMilestones.map((milestone, index) => {
                   const isActive = index === activeIndex;
 
                   return (
@@ -284,7 +244,7 @@ function EducationTimelineComponent() {
               onScroll={handleMobileScroll}
               className="flex gap-4 overflow-x-auto pb-2 px-1 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
-              {MILESTONES.map((milestone, index) => {
+              {educationMilestones.map((milestone, index) => {
                 const isActive = index === activeIndex;
 
                 return (

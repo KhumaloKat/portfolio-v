@@ -4,13 +4,17 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Github, PlayCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import type { PortfolioItem } from "@/data/data";
+import ScreenshotLightbox from "./ScreenshotLightbox";
 
 type ProjectCaseStudyViewProps = {
   project: PortfolioItem;
 };
 
 export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewProps) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#1B1B1B] text-white">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.14),transparent_30%),radial-gradient(circle_at_82%_0%,rgba(255,255,255,0.08),transparent_24%),linear-gradient(180deg,#222222_0%,#1f1f1f_42%,#1B1B1B_100%)]" />
@@ -42,6 +46,12 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
                 <span>Live Demo</span>
               </a>
             ) : null}
+            {project.heroVideo ? (
+              <a href="#project-demo" className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/8 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-xl">
+                <PlayCircle size={16} />
+                <span>Watch demo</span>
+              </a>
+            ) : null}
           </div>
         </motion.div>
 
@@ -62,9 +72,13 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
                 <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/72 sm:text-base">
                   {project.overview}
                 </p>
+                <p className="mt-4 max-w-2xl rounded-[20px] border border-white/12 bg-white/8 px-4 py-3 text-sm leading-relaxed text-white/88 sm:text-base">
+                  <span className="mr-2 text-xs uppercase tracking-[0.2em] text-white/58">Result</span>
+                  {project.outcome}
+                </p>
               </div>
 
-              <div className="relative aspect-video overflow-hidden rounded-[28px] border border-white/12 bg-black/28">
+              <div id="project-demo" className="relative aspect-video overflow-hidden rounded-[28px] border border-white/12 bg-black/28">
                 {project.heroVideo ? (
                   <video
                     src={project.heroVideo}
@@ -75,7 +89,16 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
                     controls
                     className="absolute inset-0 h-full w-full scale-[1.08] object-cover"
                   />
-                ) : null}
+                ) : (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    priority
+                  />
+                )}
               </div>
             </div>
           </motion.div>
@@ -133,14 +156,18 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
 
         <section className="rounded-[34px] border border-white/14 bg-white/7 p-5 backdrop-blur-2xl sm:p-6 lg:p-8">
           <p className="text-xs uppercase tracking-[0.2em] text-white/58">Screenshots</p>
+          <p className="mt-2 text-sm text-white/55">Click a screenshot to view full screen. Swipe or use the arrows to move between them.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {project.gallery.map((item, index) => (
-              <motion.div
+              <motion.button
+                type="button"
                 key={`${project.slug}-gallery-${item}`}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: 0.05 * index }}
-                className="relative aspect-[1.25/1] overflow-hidden rounded-[26px] border border-white/14 bg-black/20"
+                onClick={() => setLightboxIndex(index)}
+                className="relative aspect-[1.25/1] cursor-zoom-in overflow-hidden rounded-[26px] border border-white/14 bg-black/20 text-left transition-[filter] duration-300 hover:brightness-110"
+                aria-label={`View ${project.title} screenshot ${index + 1} full screen`}
               >
                 <Image
                   src={item}
@@ -149,11 +176,20 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-              </motion.div>
+              </motion.button>
             ))}
           </div>
         </section>
       </main>
+
+      {lightboxIndex !== null ? (
+        <ScreenshotLightbox
+          images={project.gallery}
+          alt={project.title}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
+      ) : null}
     </div>
   );
 }

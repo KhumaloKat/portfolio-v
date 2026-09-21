@@ -6,7 +6,7 @@ const Navbar = () => {
     const menuItems = [
         { label: "Home", href: "#home" },
         { label: "About", href: "#about" },
-        { label: "Project", href: "#portfolio" },
+        { label: "Projects", href: "#portfolio" },
         { label: "Contact", href: "#contact" },
     ];
     const [selected, setSelected] = useState("Home");

@@ -1,51 +1,10 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import CustomeText from "./ui/CustomeText";
-import emailjs from "@emailjs/browser";
+import { site } from "@/data/data";
 
 type StatusType = "idle" | "success" | "error";
-
-type EmailJSError = {
-  status?: number;
-  text?: string;
-  message?: string;
-  stack?: string;
-  name?: string;
-};
-
-function extractEmailJSError(error: unknown): EmailJSError {
-  if (typeof error === "string") {
-    return { message: error };
-  }
-
-  if (error instanceof Error) {
-    return {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    };
-  }
-
-  if (typeof error === "object" && error !== null) {
-    const maybe = error as Record<string, unknown>;
-    return {
-      status: typeof maybe.status === "number" ? maybe.status : undefined,
-      text: typeof maybe.text === "string" ? maybe.text : undefined,
-      message: typeof maybe.message === "string" ? maybe.message : undefined,
-      stack: typeof maybe.stack === "string" ? maybe.stack : undefined,
-      name: typeof maybe.name === "string" ? maybe.name : undefined,
-    };
-  }
-
-  return {};
-}
-
-const EMAILJS_CONFIG = {
-  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "service_ugilufa",
-  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "template_lezac9x",
-  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "bIqxrsbZSTRgcErxl",
-};
 
 const Footer = () => {
   const [isSending, setIsSending] = useState(false);
@@ -57,17 +16,6 @@ const Footer = () => {
     subject: "",
     message: "",
   });
-
-  // Initialize EmailJS only when a public key is available.
-  useEffect(() => {
-    if (EMAILJS_CONFIG.publicKey) {
-      emailjs.init(EMAILJS_CONFIG.publicKey);
-      console.info("[EmailJS] Public key detected and initialized.");
-      return;
-    }
-
-    console.warn("[EmailJS] NEXT_PUBLIC_EMAILJS_PUBLIC_KEY is not set. Submission will still be attempted using existing EmailJS configuration.");
-  }, []);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -90,7 +38,6 @@ const Footer = () => {
       from_email: formData.from_email.trim(),
       subject: formData.subject.trim() || "No Subject",
       message: formData.message.trim(),
-      to_email: "khumalosiya2001@gmail.com",
     };
 
     if (!payload.from_name || !payload.from_email || !payload.message) {
@@ -109,22 +56,17 @@ const Footer = () => {
     setIsSending(true);
 
     try {
-      console.info("[EmailJS] Sending request...", {
-        serviceId: EMAILJS_CONFIG.serviceId,
-        templateId: EMAILJS_CONFIG.templateId,
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      const response = await emailjs.send(
-        EMAILJS_CONFIG.serviceId,
-        EMAILJS_CONFIG.templateId,
-        payload,
-        { publicKey: EMAILJS_CONFIG.publicKey }
-      );
+      const result = (await response.json()) as { error?: string };
 
-      console.info("[EmailJS] Success response:", {
-        status: response.status,
-        text: response.text,
-      });
+      if (!response.ok) {
+        throw new Error(result.error || "Unable to send message. Please try again.");
+      }
 
       setStatusType("success");
       setStatusMessage("Message sent successfully.");
@@ -135,22 +77,10 @@ const Footer = () => {
         message: "",
       });
     } catch (error: unknown) {
-      const emailError = extractEmailJSError(error);
-
-      console.warn("[EmailJS] Request failed", {
-        error,
-        name: emailError.name,
-        status: emailError.status,
-        text: emailError.text,
-        message: emailError.message,
-        stack: emailError.stack,
-      });
-
       setStatusType("error");
-      const reason = emailError.text || emailError.message;
       setStatusMessage(
-        reason
-          ? `Unable to send message. ${reason}`
+        error instanceof Error
+          ? error.message
           : "Unable to send message. Please try again."
       );
     } finally {
@@ -233,37 +163,37 @@ const Footer = () => {
         <div className="gpu-layer rounded-[32px] border border-white/30 bg-white/10 backdrop-blur-2xl p-6 md:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.3)]">
           <div className="space-y-6">
             <div>
-              <h3 className="text-2xl font-semibold text-white">Khumalo Katleho</h3>
-              <p className="text-white/70">Computer System Engineer</p>
+              <h3 className="text-2xl font-semibold text-white">{site.name}</h3>
+              <p className="text-white/70">{site.role}</p>
             </div>
 
             <div className="space-y-4 text-white/90">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/60">Phone</p>
-                <a href="tel:+27641622166" className="mt-1 inline-block transition-[transform,opacity,filter] duration-300 hover:brightness-110">+27 64 162 2166</a>
+                <a href={site.phoneHref} className="mt-1 inline-block transition-[transform,opacity,filter] duration-300 hover:brightness-110">{site.phoneDisplay}</a>
               </div>
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/60">Email</p>
-                <a href="mailto:khumalosiya2001@gmail.com" className="mt-1 inline-block transition-[transform,opacity,filter] duration-300 hover:brightness-110">khumalosiya2001@gmail.com</a>
+                <a href={`mailto:${site.email}`} className="mt-1 inline-block transition-[transform,opacity,filter] duration-300 hover:brightness-110">{site.email}</a>
               </div>
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/60">GitHub</p>
-                <a href="https://github.com/KhumaloKat" target="_blank" rel="noreferrer" className="mt-1 inline-block transition-[transform,opacity,filter] duration-300 hover:brightness-110">KhumaloKat</a>
+                <a href={site.github} target="_blank" rel="noreferrer" className="mt-1 inline-block transition-[transform,opacity,filter] duration-300 hover:brightness-110">{site.githubHandle}</a>
               </div>
             </div>
 
             <div className="flex flex-wrap gap-3 pt-2">
-              <a href="https://www.linkedin.com/in/khumalo-kat/" target="_blank" rel="noreferrer" className="gpu-layer rounded-full border border-white/35 bg-white/15 px-4 py-2 text-sm font-medium text-white transition-[transform,opacity,filter] duration-300 hover:scale-[1.03] hover:brightness-110">LinkedIn</a>
-              <a href="https://www.instagram.com/khumalo_kat/" target="_blank" rel="noreferrer" className="gpu-layer rounded-full border border-white/35 bg-white/15 px-4 py-2 text-sm font-medium text-white transition-[transform,opacity,filter] duration-300 hover:scale-[1.03] hover:brightness-110">Instagram</a>
-              <a href="https://www.facebook.com/khumalo.kat/" target="_blank" rel="noreferrer" className="gpu-layer rounded-full border border-white/35 bg-white/15 px-4 py-2 text-sm font-medium text-white transition-[transform,opacity,filter] duration-300 hover:scale-[1.03] hover:brightness-110">Facebook</a>
-              <a href="https://x.com/khumalo_kat" target="_blank" rel="noreferrer" className="gpu-layer rounded-full border border-white/35 bg-white/15 px-4 py-2 text-sm font-medium text-white transition-[transform,opacity,filter] duration-300 hover:scale-[1.03] hover:brightness-110">X</a>
+              <a href={site.linkedin} target="_blank" rel="noreferrer" className="gpu-layer rounded-full border border-white/35 bg-white/15 px-4 py-2 text-sm font-medium text-white transition-[transform,opacity,filter] duration-300 hover:scale-[1.03] hover:brightness-110">LinkedIn</a>
+              <a href={site.instagram} target="_blank" rel="noreferrer" className="gpu-layer rounded-full border border-white/35 bg-white/15 px-4 py-2 text-sm font-medium text-white transition-[transform,opacity,filter] duration-300 hover:scale-[1.03] hover:brightness-110">Instagram</a>
+              <a href={site.facebook} target="_blank" rel="noreferrer" className="gpu-layer rounded-full border border-white/35 bg-white/15 px-4 py-2 text-sm font-medium text-white transition-[transform,opacity,filter] duration-300 hover:scale-[1.03] hover:brightness-110">Facebook</a>
+              <a href={site.x} target="_blank" rel="noreferrer" className="gpu-layer rounded-full border border-white/35 bg-white/15 px-4 py-2 text-sm font-medium text-white transition-[transform,opacity,filter] duration-300 hover:scale-[1.03] hover:brightness-110">X</a>
             </div>
           </div>
         </div>
       </div>
 
       <div className="w-full max-w-6xl border-t border-white/20 pt-6 text-center text-sm text-white/70 relative z-10">
-        <p>© copyright KhumaloKat design | 2025</p>
+        <p>© copyright KhumaloKat design | 2026</p>
       </div>
     </footer>
   );

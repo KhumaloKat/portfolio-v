@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "portfolio-v",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@vercel/analytics": "^1.5.0",
     "framer-motion": "^12.42.2",
     "lucide-react": "^0.517.0",
@@ -17,6 +16,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-type-animation": "^3.2.0",
+    "resend": "^6.28.0",
     "swiper": "^11.2.8"
   },
   "devDependencies": {

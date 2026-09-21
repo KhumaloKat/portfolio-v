@@ -23,10 +23,11 @@ function ServicesCardComponent({ title, imageSrc, priority = false }: HoverCardP
       {/* Image */}
       <Image
         src={imageSrc}
-        alt="Card Image"
+        alt={title}
         width={416}
         height={307}
         className="object-cover z-20 w-full h-[300px] md:max-h-[360px] lg:max-h-[416px] rounded-[35px]"
+        sizes="(max-width: 768px) 90vw, 416px"
         priority={priority}
       />
     </div>

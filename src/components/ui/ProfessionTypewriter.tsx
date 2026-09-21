@@ -8,17 +8,17 @@ type ProfessionTypewriterProps = {
 };
 
 const PROFESSIONS = [
-  "Software Developer",
   "Computer Systems Engineer",
-  "Drone Pilot",
+  "Software Developer",
   "Computer Vision Engineer",
   "Machine Learning Engineer",
+  "Embedded Systems Engineer",
 ] as const;
 
 const HOLD_MS = 3000;
 const TYPING_SPEED_MS = 60;
 const DELETING_SPEED_MS = 35;
-const RESERVED_WIDTH_CH = 26;
+const RESERVED_WIDTH_CH = 28;
 
 const sequence = PROFESSIONS.flatMap((profession) => [profession, HOLD_MS]);
 
