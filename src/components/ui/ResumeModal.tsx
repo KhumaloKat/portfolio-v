@@ -16,6 +16,12 @@ interface ResumeModalProps {
 const headerButtonClass =
   "inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white px-4 py-2 text-sm font-semibold text-[#1B1B1B] shadow-[0_8px_24px_rgba(0,0,0,0.28)] transition-colors hover:bg-[#e8e8e8]";
 
+const MAX_RESUME_PAGES = 8;
+
+function resumePageSrc(pdfUrl: string, page: number) {
+  return pdfUrl.replace("/image/upload/", `/image/upload/f_jpg,q_auto:best,pg_${page}/`);
+}
+
 export default function ResumeModal({
   isOpen,
   onClose,
@@ -25,10 +31,12 @@ export default function ResumeModal({
   title = "Resume",
 }: ResumeModalProps) {
   const [shouldRenderPdf, setShouldRenderPdf] = useState(false);
+  const [pageCount, setPageCount] = useState(MAX_RESUME_PAGES);
 
   useEffect(() => {
     if (isOpen) {
       setShouldRenderPdf(true);
+      setPageCount(MAX_RESUME_PAGES);
       const previousOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
 
@@ -133,14 +141,24 @@ export default function ResumeModal({
               </div>
 
               <div className="relative z-10 min-h-0 flex-1 bg-[#1B1B1B] px-3 pb-3 sm:px-4 sm:pb-4">
-                <div className="h-full overflow-hidden rounded-[22px] border border-white/30 bg-white/70 shadow-inner shadow-white/30 backdrop-blur-sm">
+                <div className="h-full overflow-y-auto rounded-[22px] border border-white/30 bg-white">
                   {shouldRenderPdf ? (
-                    <iframe
-                      src={previewUrl}
-                      title="Resume PDF"
-                      className="h-full w-full"
-                      loading="lazy"
-                    />
+                    <div className="mx-auto flex w-full max-w-[900px] flex-col gap-4 p-3 sm:p-5">
+                      {Array.from({ length: pageCount }, (_, index) => {
+                        const page = index + 1;
+                        return (
+                          <img
+                            key={`${previewUrl}-${page}`}
+                            src={resumePageSrc(previewUrl, page)}
+                            alt={`Resume page ${page}`}
+                            className="w-full bg-white shadow-[0_8px_30px_rgba(15,23,42,0.12)]"
+                            onError={() => {
+                              setPageCount((current) => Math.min(current, index));
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
                   ) : (
                     <div className="flex h-full items-center justify-center text-sm font-medium text-slate-700">
                       Loading resume...

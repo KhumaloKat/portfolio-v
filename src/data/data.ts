@@ -71,9 +71,9 @@ export const site = {
   facebook: "https://www.facebook.com/khumalo.kat/",
   x: "https://x.com/khumalo_kat",
   githubHandle: "KhumaloKat",
-  resumeUrl: "https://res.cloudinary.com/ye9luiag/image/upload/v1793195264/CV.pdf",
+  resumeUrl: "https://res.cloudinary.com/ye9luiag/image/upload/v1793196447/CV.pdf",
   resumeDownloadUrl:
-    "https://res.cloudinary.com/ye9luiag/image/upload/fl_attachment:Khumalo_Katleho_CV.pdf/v1793195264/CV.pdf",
+    "https://res.cloudinary.com/ye9luiag/image/upload/fl_attachment:Khumalo_Katleho_CV.pdf/v1793196447/CV.pdf",
 };
 
 export const profileSummary =
