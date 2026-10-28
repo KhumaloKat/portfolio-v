@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Github, PlayCircle } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink, Github, PlayCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -44,6 +44,12 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
               <a href={project.liveDemoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/8 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-xl">
                 <ExternalLink size={16} />
                 <span>Live Demo</span>
+              </a>
+            ) : null}
+            {project.apkUrl ? (
+              <a href={project.apkUrl} download={`${project.slug}.apk`} className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/8 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-xl">
+                <Download size={16} />
+                <span>Download APK</span>
               </a>
             ) : null}
             {project.heroVideo ? (

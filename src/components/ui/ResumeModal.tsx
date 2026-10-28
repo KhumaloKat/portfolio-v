@@ -13,8 +13,8 @@ interface ResumeModalProps {
   title?: string;
 }
 
-const glassButtonClass =
-  "inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2 text-sm font-medium text-white shadow-[0_8px_30px_rgba(0,0,0,0.22)] backdrop-blur-xl transition-colors hover:bg-white/25";
+const headerButtonClass =
+  "inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white px-4 py-2 text-sm font-semibold text-[#1B1B1B] shadow-[0_8px_24px_rgba(0,0,0,0.28)] transition-colors hover:bg-[#e8e8e8]";
 
 export default function ResumeModal({
   isOpen,
@@ -85,13 +85,22 @@ export default function ResumeModal({
             style={{ willChange: "transform, opacity", transform: "translate3d(0, 0, 0)", backfaceVisibility: "hidden" }}
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-gradient-to-b from-white/26 via-transparent to-transparent" />
-            <div className="pointer-events-none absolute inset-[1px] rounded-[27px] border border-white/28" />
-            <div className="pointer-events-none absolute left-8 right-8 top-1 h-14 rounded-full bg-white/30 blur-xl" />
+            <div className="pointer-events-none absolute inset-[1px] rounded-[27px] border border-white/20" />
 
             <div className="relative z-10 flex h-full flex-col">
-              <div className="flex items-center justify-between px-4 pb-3 pt-4 sm:px-6">
-                <div className="rounded-full border border-white/35 bg-white/15 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-xl">
+              <div className="relative z-30 flex shrink-0 items-center justify-between gap-3 bg-[#1B1B1B] px-3 py-3 sm:px-5">
+                <motion.button
+                  type="button"
+                  onClick={onClose}
+                  className={headerButtonClass}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                >
+                  <X size={16} />
+                  <span>Back</span>
+                </motion.button>
+
+                <div className="hidden min-w-0 truncate px-2 text-sm font-semibold text-white sm:block">
                   {title}
                 </div>
 
@@ -101,40 +110,29 @@ export default function ResumeModal({
                     download
                     target="_blank"
                     rel="noreferrer"
-                    className={glassButtonClass}
-                    whileHover={{ scale: 1.04, filter: "brightness(1.08)" }}
+                    className={headerButtonClass}
+                    whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.96 }}
                   >
                     <Download size={16} />
-                    <span>Download Resume</span>
+                    <span>Download</span>
                   </motion.a>
 
                   <motion.a
                     href={openInNewTabUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className={glassButtonClass}
-                    whileHover={{ scale: 1.04, filter: "brightness(1.08)" }}
+                    className={headerButtonClass}
+                    whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.96 }}
                   >
                     <ExternalLink size={16} />
-                    <span>Open in New Tab</span>
+                    <span>View</span>
                   </motion.a>
-
-                  <motion.button
-                    type="button"
-                    onClick={onClose}
-                    className={glassButtonClass}
-                    whileHover={{ scale: 1.04, filter: "brightness(1.08)" }}
-                    whileTap={{ scale: 0.96 }}
-                  >
-                    <X size={16} />
-                    <span>Close</span>
-                  </motion.button>
                 </div>
               </div>
 
-              <div className="relative min-h-0 flex-1 px-3 pb-3 sm:px-4 sm:pb-4">
+              <div className="relative z-10 min-h-0 flex-1 bg-[#1B1B1B] px-3 pb-3 sm:px-4 sm:pb-4">
                 <div className="h-full overflow-hidden rounded-[22px] border border-white/30 bg-white/70 shadow-inner shadow-white/30 backdrop-blur-sm">
                   {shouldRenderPdf ? (
                     <iframe

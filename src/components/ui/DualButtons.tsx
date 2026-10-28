@@ -2,11 +2,8 @@
 
 import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { site } from '@/data/data';
 import ResumeModal from './ResumeModal';
-
-const RESUME_VIEW_URL = 'https://drive.google.com/file/d/1mG5c70vuyMdaR24hQhFIpPqJzAbAeYpR/view?usp=drive_link';
-const RESUME_PREVIEW_URL = 'https://drive.google.com/file/d/1mG5c70vuyMdaR24hQhFIpPqJzAbAeYpR/preview';
-const RESUME_DOWNLOAD_URL = 'https://drive.google.com/uc?export=download&id=1mG5c70vuyMdaR24hQhFIpPqJzAbAeYpR';
 
 export default function DualToggleButtons() {
   const [active, setActive] = useState<"portfolio" | "resume">("portfolio");
@@ -75,9 +72,9 @@ export default function DualToggleButtons() {
       <ResumeModal
         isOpen={isResumeModalOpen}
         onClose={() => setIsResumeModalOpen(false)}
-        previewUrl={RESUME_PREVIEW_URL}
-        downloadUrl={RESUME_DOWNLOAD_URL}
-        openInNewTabUrl={RESUME_VIEW_URL}
+        previewUrl={site.resumeUrl}
+        downloadUrl={site.resumeDownloadUrl}
+        openInNewTabUrl={site.resumeUrl}
         title="Khumalo Katleho Resume"
       />
     </>
