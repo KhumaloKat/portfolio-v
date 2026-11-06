@@ -66,7 +66,7 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="relative overflow-hidden rounded-[34px] border border-white/16 bg-white/8 p-5 shadow-[0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur-2xl sm:p-6 lg:p-7"
+            className="relative overflow-hidden rounded-[34px] border border-white/16 bg-[#2a2a2a]/92 p-5 shadow-[0_30px_90px_rgba(0,0,0,0.28)] sm:p-6 lg:p-7"
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.18),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent)]" />
             <div className="relative z-10 flex flex-col gap-6">
@@ -92,8 +92,18 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
                     muted
                     loop
                     playsInline
-                    controls
-                    className="absolute inset-0 h-full w-full scale-[1.08] object-cover"
+                    controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
+                    disablePictureInPicture
+                    disableRemotePlayback
+                    onClick={(event) => {
+                      const video = event.currentTarget;
+                      if (video.paused) {
+                        void video.play();
+                      } else {
+                        video.pause();
+                      }
+                    }}
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
                 ) : (
                   <Image
@@ -115,7 +125,7 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
             transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col gap-5"
           >
-            <div className="case-study-panel rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+            <div className="case-study-panel rounded-[30px] border border-white/16 bg-[#2a2a2a]/92 p-5 sm:p-6">
               <p className="text-xs uppercase tracking-[0.2em] text-white/58">Technologies</p>
               <div className="mt-4 flex flex-wrap gap-2.5">
                 {project.technologies.map((tech, index) => (
@@ -132,7 +142,7 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
               </div>
             </div>
 
-            <div className="case-study-panel rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+            <div className="case-study-panel rounded-[30px] border border-white/16 bg-[#2a2a2a]/92 p-5 sm:p-6">
               <p className="text-xs uppercase tracking-[0.2em] text-white/58">Key Features</p>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-white/82 sm:text-base">
                 {project.keyFeatures.map((feature) => (
@@ -144,7 +154,7 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
               </ul>
             </div>
 
-            <div className="case-study-panel rounded-[30px] border border-white/16 bg-white/8 p-5 backdrop-blur-2xl sm:p-6">
+            <div className="case-study-panel rounded-[30px] border border-white/16 bg-[#2a2a2a]/92 p-5 sm:p-6">
               <p className="text-xs uppercase tracking-[0.2em] text-white/58">Workflow</p>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-white/82 sm:text-base">
                 {project.implementation.map((step) => (
@@ -160,7 +170,7 @@ export default function ProjectCaseStudyView({ project }: ProjectCaseStudyViewPr
           </motion.aside>
         </section>
 
-        <section className="rounded-[34px] border border-white/14 bg-white/7 p-5 backdrop-blur-2xl sm:p-6 lg:p-8">
+        <section className="rounded-[34px] border border-white/14 bg-[#2a2a2a]/92 p-5 sm:p-6 lg:p-8">
           <p className="text-xs uppercase tracking-[0.2em] text-white/58">Screenshots</p>
           <p className="mt-2 text-sm text-white/55">Click a screenshot to view full screen. Swipe or use the arrows to move between them.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">

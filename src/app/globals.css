@@ -9,10 +9,8 @@ body {
 }
 
 .gpu-layer {
-  will-change: transform, opacity;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
-  contain: layout paint style;
 }
 
 .animation-safe {
@@ -188,11 +186,16 @@ body {
   cursor: none !important;
 }
 
+.has-premium-cursor video::-webkit-media-controls,
+.has-premium-cursor video::-webkit-media-controls-enclosure,
+.has-premium-cursor video::-webkit-media-controls-overlay-enclosure,
+.has-premium-cursor video::-webkit-media-controls-overlay-play-button,
+.has-premium-cursor video::-internal-media-controls-download-button {
+  display: none !important;
+}
+
 .case-study-panel {
   isolation: isolate;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  contain: paint;
 }
 .marquee {
     animation: scroll-left 10s linear infinite;

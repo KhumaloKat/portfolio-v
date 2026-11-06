@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useSpring } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type CursorMode = "default" | "hover" | "portrait";
 
@@ -16,6 +16,9 @@ export default function PremiumCursor() {
   const [visible, setVisible] = useState(false);
   const [mode, setMode] = useState<CursorMode>("default");
   const [pressed, setPressed] = useState(false);
+
+  const modeRef = useRef<CursorMode>("default");
+  const visibleRef = useRef(false);
 
   const innerX = useSpring(0, { stiffness: 620, damping: 46, mass: 0.35 });
   const innerY = useSpring(0, { stiffness: 620, damping: 46, mass: 0.35 });
@@ -46,6 +49,14 @@ export default function PremiumCursor() {
       return;
     }
 
+    const applyMode = (nextMode: CursorMode) => {
+      if (modeRef.current === nextMode) {
+        return;
+      }
+      modeRef.current = nextMode;
+      setMode(nextMode);
+    };
+
     const handleMove = (event: MouseEvent) => {
       const x = event.clientX;
       const y = event.clientY;
@@ -56,32 +67,41 @@ export default function PremiumCursor() {
       outerY.set(y);
       cursorOpacity.set(1);
 
-      if (!visible) {
+      if (!visibleRef.current) {
+        visibleRef.current = true;
         setVisible(true);
       }
 
-      const target = event.target as HTMLElement | null;
-      if (!target) {
-        setMode("default");
+      const target = event.target;
+      const element =
+        target instanceof Element
+          ? target
+          : target instanceof Node
+            ? target.parentElement
+            : null;
+
+      if (!element) {
+        applyMode("default");
         return;
       }
 
-      if (target.closest("[data-hero-portrait]")) {
-        setMode("portrait");
+      if (element.closest("[data-hero-portrait]")) {
+        applyMode("portrait");
         return;
       }
 
-      if (target.closest(INTERACTIVE_SELECTOR)) {
-        setMode("hover");
+      if (element.closest(INTERACTIVE_SELECTOR)) {
+        applyMode("hover");
         return;
       }
 
-      setMode("default");
+      applyMode("default");
     };
 
     const handleMouseDown = () => setPressed(true);
     const handleMouseUp = () => setPressed(false);
     const handleMouseLeave = () => {
+      visibleRef.current = false;
       setVisible(false);
       cursorOpacity.set(0);
       setPressed(false);
@@ -103,7 +123,7 @@ export default function PremiumCursor() {
       window.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, [cursorOpacity, enabled, innerX, innerY, outerX, outerY, visible]);
+  }, [cursorOpacity, enabled, innerX, innerY, outerX, outerY]);
 
   const cursorState = useMemo(() => {
     const base = {
@@ -143,7 +163,7 @@ export default function PremiumCursor() {
     <>
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-[2147483647] rounded-full border border-white/70 bg-[#2b3138]/55 backdrop-blur-lg"
+        className="pointer-events-none fixed top-0 left-0 z-[2147483647] rounded-full border border-white/70 bg-[#2b3138]"
         style={{
           x: innerX,
           y: innerY,

@@ -204,7 +204,7 @@ export const portfolioData: PortfolioItem[] = [
     challenges: ["Showing the same civic flows clearly on phone and desktop", "Making map reports readable without hiding the street context", "Turning public weather and water figures into advice a resident can use"],
     solutions: ["Paired mobile and web layouts for each primary screen", "Filters plus incident cards on the map, with a 3D radius for affected area", "Readiness cards that compare usage to target and attach a local forecast"],
     results: ["Residents can report, map, and follow issues from a phone or a browser", "Projects show funding versus build progress in one place", "Readiness translates dam and weather feeds into ward-level guidance"],
-    liveDemoUrl: "https://ward-watch.vercel.app/",
+    liveDemoUrl: "https://ward-watch.expo.app/",
     apkUrl: "/ward-watch/ward-watch.apk",
     relatedSlugs: ["intelliafrica-cloud", "intelliafrica"],
   },

@@ -61,12 +61,12 @@ const PortfolioCardComponent: React.FC<PortfolioCardProps> = ({ priority = false
         <div
           className="absolute bottom-0 left-0 right-0 
           w-[92%] mx-auto mb-3 md:mb-4 
-          bg-black/40 backdrop-blur-md 
+          bg-black/72 
           rounded-[16px] md:rounded-[18px] 
           px-3 md:px-4 py-3 
-          opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 
-          transition-[transform,opacity,filter] duration-500 ease-in-out z-30
-          [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0"
+          opacity-0 group-hover:opacity-100 
+          transition-opacity duration-300 ease-out z-30
+          [@media(hover:none)]:opacity-100"
         >
           <h3 className="text-[16px] md:text-[20px] font-bold text-white mb-1 text-center md:text-left">
             {project.title}
