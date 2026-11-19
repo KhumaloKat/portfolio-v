@@ -346,12 +346,12 @@ export default function Hero() {
               />
               <div className="relative z-20 hero-portrait-breathe">
                 <Image
-                  src="/p8.png"
+                  src="/hero-portrait.png"
                   alt={site.name}
-                  width={952}
-                  height={636}
+                  width={1024}
+                  height={1024}
                   className="w-full h-auto max-h-[52vh] object-contain"
-                  sizes="(max-width: 952px) 90vw, 952px"
+                  sizes="(max-width: 1024px) 90vw, 1024px"
                   priority
                 />
               </div>
